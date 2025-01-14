@@ -11,36 +11,51 @@ class SmsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Envoi de Code SMS"),
+        title: const Text("Ouverture du garage"),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () async {
-                await smsController.requestPermissions(); // Demander les permissions
-                String code = smsController.generateCode(); // Générer un code
-                String message = "4F50454E";
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+             ElevatedButton(
+  onPressed: () async {
+    await smsController.requestPermissions();
+    String code = smsController.generateCode();
+    String message = "4F50454E";
 
-                // Numéro de destinataire (vous pouvez le rendre dynamique)
-                List<String> recipients = ["91367306"];
-
-                // Envoyer le SMS
-                await smsController.sendSms(message, recipients);
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-              ),
-              child: const Text("Envoyer le Code"),
-            ),
-            const SizedBox(height: 20),
-            Obx(() => smsController.isLoading.value
-                ? const CircularProgressIndicator()
-                : const SizedBox()),
-          ],
+    List<String> recipients = ["91367306"];
+    await smsController.sendSms(message, recipients);
+  },
+  style: ElevatedButton.styleFrom(
+    padding: const EdgeInsets.all(50),
+    shape: const CircleBorder(),
+    backgroundColor: Colors.blue,
+    shadowColor: Colors.black, // Couleur de l'ombre
+    elevation: 10, // Élévation pour effet 3D
+    surfaceTintColor: Colors.blueAccent, // Accentuation lors de l'effet de pression
+  ),
+  child: const Text(
+    "OPEN",
+    style: TextStyle(
+      color: Colors.white,
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+)
+,
+              const SizedBox(height: 20),
+              Obx(() => smsController.isLoading.value
+                  ? const CircularProgressIndicator()
+                  : const SizedBox()),
+            ],
+          ),
         ),
       ),
     );
